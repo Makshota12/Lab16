@@ -1,7 +1,9 @@
 package com.example.lab16.accessibility
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -72,7 +74,7 @@ fun AccessibleButton(
             }
             .testTag("button_${contentDescription.replace(" ", "_")}"),
         enabled = enabled,
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(14.dp),
         colors = if (accessibilityState.highContrastEnabled) {
             // Enhanced colors for high contrast
             ButtonDefaults.buttonColors(
@@ -233,7 +235,7 @@ fun AccessibleTextField(
             onSearch = keyboardActions.onSearch,
             onSend = keyboardActions.onSend
         ),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(14.dp)
     )
 }
 
@@ -273,6 +275,11 @@ fun AccessibleSwitch(
             )
             .defaultMinSize(minHeight = minSize)
             .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .background(
+                MaterialTheme.colorScheme.surfaceVariant.copy(alpha = if (enabled) 0.6f else 0.3f)
+            )
+            .padding(horizontal = 16.dp, vertical = 12.dp)
             .semantics(mergeDescendants = true) {
                 this.contentDescription = fullDescription
                 this.role = Role.Switch
