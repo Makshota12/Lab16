@@ -45,7 +45,7 @@ fun AccessibleButton(
         if (enabled) {
             contentDescription
         } else {
-            "$contentDescription. Disabled"
+            "$contentDescription. Отключено"
         }
     }
     
@@ -63,7 +63,7 @@ fun AccessibleButton(
                 if (icon != null) {
                     this.customActions = listOf(
                         CustomAccessibilityAction(
-                            "Press button $contentDescription",
+                            "Нажать кнопку $contentDescription",
                             { onClick(); true }
                         )
                     )
@@ -134,12 +134,12 @@ fun AccessibleTextField(
     // Create semantic description
     val semanticsDescription = remember(label, placeholder, isError, supportingText) {
         buildString {
-            append("Input field: $label")
+            append("Поле ввода: $label")
             if (placeholder.isNotEmpty()) {
-                append(". Example: $placeholder")
+                append(". Пример: $placeholder")
             }
             if (isError) {
-                append(". Has error")
+                append(". Ошибка ввода")
             }
             supportingText?.let {
                 append(". $it")
@@ -162,7 +162,7 @@ fun AccessibleTextField(
                 }
                 
                 // For screen readers: read current value
-                this.stateDescription = "Entered ${value.length} characters"
+                this.stateDescription = "Введено символов: ${value.length}"
                 
                 // Indicate this is a traversal group
                 this.isTraversalGroup = true
@@ -256,11 +256,11 @@ fun AccessibleSwitch(
     
     // Description for screen reader
     val stateDescription = remember(checked) {
-        if (checked) "On" else "Off"
+        if (checked) "Включено" else "Выключено"
     }
     
     val fullDescription = remember(label, stateDescription) {
-        "$label. Current state: $stateDescription"
+        "$label. Текущее состояние: $stateDescription"
     }
     
     Row(

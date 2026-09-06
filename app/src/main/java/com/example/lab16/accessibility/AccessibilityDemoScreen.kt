@@ -37,23 +37,23 @@ fun AccessibilityDemoScreen() {
         listOf(
             NewsItem(
                 id = "1",
-                title = "Android Accessibility News",
-                description = "Google introduced new tools for creating accessible apps",
-                date = "March 15, 2024",
+                title = "Новости доступности Android",
+                description = "Google представил новые инструменты для создания доступных приложений",
+                date = "15 марта 2024",
                 icon = Icons.Default.Info
             ),
             NewsItem(
                 id = "2",
-                title = "Material Design 3 Update",
-                description = "Added improved components for screen reader support",
-                date = "March 10, 2024",
+                title = "Обновление Material Design 3",
+                description = "Добавлены улучшенные компоненты для поддержки экранного диктора",
+                date = "10 марта 2024",
                 icon = Icons.Default.Favorite
             ),
             NewsItem(
                 id = "3",
                 title = "Jetpack Compose 1.5",
-                description = "Version includes built-in semantics and accessibility support",
-                date = "March 5, 2024",
+                description = "Версия включает встроенную поддержку семантики и доступности",
+                date = "5 марта 2024",
                 icon = Icons.Default.Build
             )
         )
@@ -70,19 +70,19 @@ fun AccessibilityDemoScreen() {
 
         AccessibilityStatusCard(accessibilityState)
 
-        // Input fields section
+        // Секция полей ввода
         SectionHeader(
-            title = "Accessible Input Fields",
-            subtitle = "Text fields with full screen reader support",
+            title = "Доступные поля ввода",
+            subtitle = "Текстовые поля с полной поддержкой экранного диктора",
             icon = Icons.Default.Edit
         )
 
         AccessibleTextField(
             value = textFieldValue,
             onValueChange = { textFieldValue = it },
-            label = "Username",
-            placeholder = "Enter your name",
-            supportingText = "Minimum 3 characters",
+            label = "Имя пользователя",
+            placeholder = "Введите имя",
+            supportingText = "Минимум 3 символа",
             isError = textFieldValue.isNotEmpty() && textFieldValue.length < 3,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
@@ -93,7 +93,7 @@ fun AccessibilityDemoScreen() {
         AccessibleTextField(
             value = emailValue,
             onValueChange = { emailValue = it },
-            label = "Email",
+            label = "Электронная почта",
             placeholder = "example@domain.com",
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
@@ -101,32 +101,32 @@ fun AccessibilityDemoScreen() {
             )
         )
 
-        // Switches section
+        // Секция переключателей
         SectionHeader(
-            title = "Accessible Switches",
-            subtitle = "Large touch targets with state descriptions",
+            title = "Доступные переключатели",
+            subtitle = "Увеличенные области нажатия с описанием состояния",
             icon = Icons.Default.Settings
         )
 
         AccessibleSwitch(
             checked = switchChecked,
             onCheckedChange = { switchChecked = it },
-            label = "Notifications",
-            supportingText = "Receive push notifications"
+            label = "Уведомления",
+            supportingText = "Получать push-уведомления"
         )
 
         AccessibleSwitch(
             checked = true,
             onCheckedChange = {},
-            label = "Dark Mode",
-            supportingText = "Use dark theme (Disabled)",
+            label = "Тёмная тема",
+            supportingText = "Использовать тёмную тему (Отключено)",
             enabled = false
         )
 
-        // News cards section
+        // Секция карточек новостей
         SectionHeader(
-            title = "Accessible News Cards",
-            subtitle = "Rich descriptions for TalkBack",
+            title = "Доступные карточки новостей",
+            subtitle = "Подробные описания для TalkBack",
             icon = Icons.AutoMirrored.Filled.List
         )
 
@@ -136,9 +136,9 @@ fun AccessibilityDemoScreen() {
             newsItems.forEach { newsItem ->
                 AccessibleCard(
                     onClick = {
-                        // Navigation to details
+                        // Навигация к подробностям
                     },
-                    contentDescription = "News: ${newsItem.title}. ${newsItem.description}. Date: ${newsItem.date}",
+                    contentDescription = "Новость: ${newsItem.title}. ${newsItem.description}. Дата: ${newsItem.date}",
                     testTag = "news_card_${newsItem.id}"
                 ) {
                     NewsCardContent(newsItem)
@@ -146,10 +146,10 @@ fun AccessibilityDemoScreen() {
             }
         }
 
-        // Buttons section
+        // Секция кнопок действий
         SectionHeader(
-            title = "Accessible Action Buttons",
-            subtitle = "Enhanced touch targets with icons",
+            title = "Доступные кнопки действий",
+            subtitle = "Увеличенные области нажатия с иконками",
             icon = Icons.Default.CheckCircle
         )
 
@@ -160,37 +160,37 @@ fun AccessibilityDemoScreen() {
                 .padding(horizontal = 16.dp)
         ) {
             AccessibleButton(
-                onClick = { /* Save */ },
+                onClick = { /* Сохранить */ },
                 modifier = Modifier.weight(1f),
-                contentDescription = "Save changes",
+                contentDescription = "Сохранить изменения",
                 icon = Icons.Default.Check
             ) {
-                Text("Save")
+                Text("Сохранить")
             }
 
             AccessibleButton(
-                onClick = { /* Cancel */ },
+                onClick = { /* Отмена */ },
                 modifier = Modifier.weight(1f),
-                contentDescription = "Cancel changes",
+                contentDescription = "Отменить изменения",
                 icon = Icons.Default.Close,
                 enabled = false
             ) {
-                Text("Cancel")
+                Text("Отмена")
             }
         }
 
         AccessibleButton(
-            onClick = { /* Send */ },
+            onClick = { /* Отправить */ },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            contentDescription = "Submit form",
+            contentDescription = "Отправить форму",
             icon = Icons.AutoMirrored.Filled.Send
         ) {
-            Text("Submit Form")
+            Text("Отправить форму")
         }
 
-        // Info about accessibility
+        // Информация о доступности
         if (accessibilityState.screenReaderEnabled) {
             TalkBackBanner()
         }
@@ -226,7 +226,7 @@ private fun DemoHeader() {
                 ) {
                     Icon(
                         imageVector = Icons.Default.Star,
-                        contentDescription = "Accessibility icon",
+                        contentDescription = "Значок доступности",
                         tint = Color.White,
                         modifier = Modifier
                             .padding(12.dp)
@@ -242,7 +242,7 @@ private fun DemoHeader() {
                         color = Color.White
                     )
                     Text(
-                        text = "Accessibility Demo",
+                        text = "Демонстрация доступности",
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color.White.copy(alpha = 0.9f)
                     )
@@ -250,7 +250,7 @@ private fun DemoHeader() {
             }
 
             Text(
-                text = "This app demonstrates how to build beautiful interfaces that are accessible to everyone",
+                text = "Это приложение показывает, как создавать красивые интерфейсы, доступные каждому пользователю",
                 style = MaterialTheme.typography.bodyLarge,
                 color = Color.White.copy(alpha = 0.95f),
                 modifier = Modifier.padding(top = 8.dp)
@@ -324,7 +324,7 @@ fun AccessibilityStatusCard(accessibilityState: AccessibilityState) {
                     tint = MaterialTheme.colorScheme.primary
                 )
                 Text(
-                    text = "Accessibility Status",
+                    text = "Статус доступности",
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.SemiBold
@@ -341,7 +341,7 @@ fun AccessibilityStatusCard(accessibilityState: AccessibilityState) {
                     modifier = Modifier.weight(1f)
                 )
                 StatusChip(
-                    text = "Contrast",
+                    text = "Контрастность",
                     active = accessibilityState.highContrastEnabled,
                     modifier = Modifier.weight(1f)
                 )
@@ -351,12 +351,12 @@ fun AccessibilityStatusCard(accessibilityState: AccessibilityState) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 StatusChip(
-                    text = "Red. Motion",
+                    text = "Уменьш. анимации",
                     active = accessibilityState.reduceMotionEnabled,
                     modifier = Modifier.weight(1f)
                 )
                 StatusChip(
-                    text = "Font Scale: ${"%.1f".format(accessibilityState.fontScale)}x",
+                    text = "Шрифт: ${"%.1f".format(accessibilityState.fontScale)}x",
                     active = accessibilityState.fontScale != 1.0f,
                     modifier = Modifier.weight(1f)
                 )
@@ -377,7 +377,7 @@ fun AccessibilityStatusCard(accessibilityState: AccessibilityState) {
                     modifier = Modifier.size(18.dp)
                 )
                 Text(
-                    text = "Min Touch Target: ${accessibilityState.minimumTouchTargetSize.value}dp",
+                    text = "Мин. область нажатия: ${accessibilityState.minimumTouchTargetSize.value}dp",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -490,7 +490,7 @@ private fun NewsCardContent(newsItem: NewsItem) {
 
                 AccessibleIcon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                    contentDescription = "Open news details",
+                    contentDescription = "Открыть подробности новости",
                     modifier = Modifier.size(18.dp),
                     tint = MaterialTheme.colorScheme.primary
                 )
@@ -522,13 +522,13 @@ private fun TalkBackBanner() {
             )
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(
-                    text = "Screen Reader Active",
+                    text = "Экранный диктор активен",
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.onTertiaryContainer,
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
-                    text = "All elements on this page have proper descriptions for TalkBack",
+                    text = "Все элементы этой страницы имеют корректные описания для TalkBack",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.85f)
                 )
