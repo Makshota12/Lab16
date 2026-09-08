@@ -39,7 +39,6 @@ class AccessibilityComponentsTest {
             }
         }
         
-        // Check semantic properties
         composeTestRule.onNodeWithTag("button_Test_Button")
             .assert(SemanticsMatcher.expectValue(
                 SemanticsProperties.ContentDescription, 
@@ -67,7 +66,6 @@ class AccessibilityComponentsTest {
         composeTestRule.onNodeWithTag("textfield_Name")
             .performTextInput(" World")
             
-        // Check that state updates (StateDescription)
         composeTestRule.onNodeWithTag("textfield_Name")
             .assert(SemanticsMatcher.keyIsDefined(
                 SemanticsProperties.StateDescription

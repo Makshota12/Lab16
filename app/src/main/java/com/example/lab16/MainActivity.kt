@@ -18,7 +18,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             Lab16Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    // Using a Box or just passing padding to the screen
                     androidx.compose.foundation.layout.Box(modifier = Modifier.padding(innerPadding)) {
                         AccessibilityDemoScreen()
                     }

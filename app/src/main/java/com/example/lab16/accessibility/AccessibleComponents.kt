@@ -24,7 +24,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-
 @Composable
 fun AccessibleButton(
     onClick: () -> Unit,
@@ -35,10 +34,8 @@ fun AccessibleButton(
     icon: ImageVector? = null,
     content: @Composable RowScope.() -> Unit
 ) {
-    // Calculate minimum touch target size
     val minSize = accessibilityState.minimumTouchTargetSize
     
-    // Create description considering state
     val fullDescription = remember(contentDescription, enabled) {
         if (enabled) {
             contentDescription
@@ -52,12 +49,10 @@ fun AccessibleButton(
         modifier = modifier
             .defaultMinSize(minWidth = minSize, minHeight = minSize)
             .semantics {
-                // Main semantic properties
                 this.contentDescription = fullDescription
                 this.role = Role.Button
                 if (!enabled) this.disabled()
                 
-                // Additional info for screen readers
                 if (icon != null) {
                     this.customActions = listOf(
                         CustomAccessibilityAction(
@@ -67,14 +62,12 @@ fun AccessibleButton(
                     )
                 }
                 
-                // Indicate this is a traversal group
                 this.isTraversalGroup = true
             }
             .testTag("button_${contentDescription.replace(" ", "_")}"),
         enabled = enabled,
         shape = RoundedCornerShape(14.dp),
         colors = if (accessibilityState.highContrastEnabled) {
-            // Enhanced colors for high contrast
             ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.9f),
                 contentColor = Color.White,
@@ -92,7 +85,7 @@ fun AccessibleButton(
             icon?.let {
                 Icon(
                     imageVector = it,
-                    contentDescription = null, // Already described in parent
+                    contentDescription = null,
                     modifier = Modifier.size(20.dp)
                 )
             }
@@ -100,7 +93,6 @@ fun AccessibleButton(
         }
     }
 }
-
 
 @Composable
 fun AccessibleTextField(
@@ -119,7 +111,6 @@ fun AccessibleTextField(
 ) {
     val focusManager = LocalFocusManager.current
     
-    // Adapt text size - capture typography outside remember
     val typography = MaterialTheme.typography
     val textStyle = remember(accessibilityState.fontScale, typography) {
         TextStyle(
@@ -127,7 +118,6 @@ fun AccessibleTextField(
         )
     }
     
-    // Create semantic description
     val semanticsDescription = remember(label, placeholder, isError, supportingText) {
         buildString {
             append("Поле ввода: $label")
@@ -150,17 +140,14 @@ fun AccessibleTextField(
             .fillMaxWidth()
             .semantics {
                 this.contentDescription = semanticsDescription
-                // Removed invalid Role.TextField
                 this.editableText = androidx.compose.ui.text.AnnotatedString(value)
                 this.setText { text ->
                     onValueChange(text.text)
                     true
                 }
                 
-                // For screen readers: read current value
                 this.stateDescription = "Введено символов: ${value.length}"
                 
-                // Indicate this is a traversal group
                 this.isTraversalGroup = true
             }
             .testTag("textfield_${label.replace(" ", "_")}"),
@@ -200,7 +187,6 @@ fun AccessibleTextField(
         maxLines = maxLines,
         textStyle = textStyle,
         colors = if (accessibilityState.highContrastEnabled) {
-            // High contrast colors
             TextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.surface,
                 unfocusedContainerColor = MaterialTheme.colorScheme.surface,
@@ -235,7 +221,6 @@ fun AccessibleTextField(
     )
 }
 
-
 @Composable
 fun AccessibleSwitch(
     checked: Boolean,
@@ -248,7 +233,6 @@ fun AccessibleSwitch(
 ) {
     val minSize = accessibilityState.minimumTouchTargetSize
     
-    // Description for screen reader
     val stateDescription = remember(checked) {
         if (checked) "Включено" else "Выключено"
     }
@@ -315,10 +299,10 @@ fun AccessibleSwitch(
         
         Switch(
             checked = checked,
-            onCheckedChange = null, // Controlled by Row.toggleable
+            onCheckedChange = null,
             enabled = enabled,
             modifier = Modifier
-                .size(minSize) // Not exactly correct to size Switch itself, but for touch target it's okay if parent handles it
+                .size(minSize)
                 .padding(12.dp),
             colors = if (accessibilityState.highContrastEnabled) {
                 SwitchDefaults.colors(
@@ -334,9 +318,6 @@ fun AccessibleSwitch(
     }
 }
 
-/**
- * Accessible card with correct semantics
- */
 @Composable
 fun AccessibleCard(
     onClick: (() -> Unit)? = null,
@@ -364,7 +345,7 @@ fun AccessibleCard(
     } else {
         modifier.semantics {
             this.contentDescription = contentDescription
-            this.role = Role.Image // Using Image or similar generic role if not clickable, or just none if it's a container
+            this.role = Role.Image
             this.isTraversalGroup = true
         }
     }
@@ -397,9 +378,6 @@ fun AccessibleCard(
     }
 }
 
-/**
- * Accessible icon with description
- */
 @Composable
 fun AccessibleIcon(
     imageVector: ImageVector,

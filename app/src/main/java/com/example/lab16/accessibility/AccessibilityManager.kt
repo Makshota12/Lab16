@@ -18,9 +18,6 @@ import androidx.compose.ui.unit.sp
 
 class AccessibilityManager(private val context: Context) {
     
-    /**
-     * Checks if screen reader (TalkBack) is enabled
-     */
     fun isScreenReaderEnabled(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             val accessibilityManager = context
@@ -28,7 +25,6 @@ class AccessibilityManager(private val context: Context) {
                     as android.view.accessibility.AccessibilityManager
             accessibilityManager.isTouchExplorationEnabled
         } else {
-            // For older versions check accessibility services
             val services = context.contentResolver.query(
                 android.provider.Settings.Secure.CONTENT_URI,
                 null,
@@ -49,16 +45,10 @@ class AccessibilityManager(private val context: Context) {
         }
     }
     
-    /**
-     * Gets current font scale
-     */
     fun getFontScale(): Float {
         return context.resources.configuration.fontScale
     }
     
-    /**
-     * Checks if high contrast text is enabled
-     */
     fun isHighContrastEnabled(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val contrast = android.provider.Settings.Secure.getFloat(
@@ -72,9 +62,6 @@ class AccessibilityManager(private val context: Context) {
         }
     }
     
-    /**
-     * Checks if reduce motion is enabled
-     */
     fun isReduceMotionEnabled(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             val animationScale = android.provider.Settings.Global.getFloat(
@@ -88,9 +75,6 @@ class AccessibilityManager(private val context: Context) {
         }
     }
     
-    /**
-     * Checks if sticky keys are enabled
-     */
     fun isStickyKeysEnabled(): Boolean {
         return android.provider.Settings.Secure.getInt(
             context.contentResolver,
@@ -99,28 +83,19 @@ class AccessibilityManager(private val context: Context) {
         ) == 1
     }
     
-    /**
-     * Gets minimum recommended touch target size
-     */
     fun getMinimumTouchTargetSize(): Dp {
         return if (isScreenReaderEnabled()) {
-            48.dp // Larger size for screen readers
+            48.dp
         } else {
-            44.dp // Standard minimum size
+            44.dp
         }
     }
     
-    /**
-     * Adapts text size based on system settings
-     */
     fun getAdaptiveTextSize(baseSize: TextUnit): TextUnit {
         val fontScale = getFontScale()
         return (baseSize.value * fontScale).sp
     }
     
-    /**
-     * Creates an accessible description for an element
-     */
     fun createAccessibleDescription(
         contentDescription: String,
         stateDescription: String? = null,
@@ -147,16 +122,12 @@ data class AccessibilityState(
     val minimumTouchTargetSize: Dp
 )
 
-/**
- * Composable to get accessibility state
- */
 @Composable
 fun rememberAccessibilityState(): AccessibilityState {
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val density = LocalDensity.current
     
-    // We recreate manager when context changes, which shouldn't happen often
     val accessibilityManager = remember(context) { AccessibilityManager(context) }
     
     var screenReaderEnabled by remember { mutableStateOf(false) }
@@ -164,7 +135,6 @@ fun rememberAccessibilityState(): AccessibilityState {
     var highContrastEnabled by remember { mutableStateOf(false) }
     var reduceMotionEnabled by remember { mutableStateOf(false) }
     
-    // Update state when configuration changes
     androidx.compose.runtime.LaunchedEffect(configuration) {
         screenReaderEnabled = accessibilityManager.isScreenReaderEnabled()
         fontScale = accessibilityManager.getFontScale()
@@ -172,7 +142,6 @@ fun rememberAccessibilityState(): AccessibilityState {
         reduceMotionEnabled = accessibilityManager.isReduceMotionEnabled()
     }
     
-    // Initial check
     androidx.compose.runtime.LaunchedEffect(Unit) {
         screenReaderEnabled = accessibilityManager.isScreenReaderEnabled()
         fontScale = accessibilityManager.getFontScale()
