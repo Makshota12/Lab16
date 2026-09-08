@@ -24,9 +24,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-/**
- * Accessible button with enhanced semantics and touch target size
- */
+
 @Composable
 fun AccessibleButton(
     onClick: () -> Unit,
@@ -103,9 +101,7 @@ fun AccessibleButton(
     }
 }
 
-/**
- * Accessible text field with full screen reader support
- */
+
 @Composable
 fun AccessibleTextField(
     value: String,
@@ -239,9 +235,7 @@ fun AccessibleTextField(
     )
 }
 
-/**
- * Accessible switch with improved touch target
- */
+
 @Composable
 fun AccessibleSwitch(
     checked: Boolean,
